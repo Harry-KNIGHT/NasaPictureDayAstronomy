@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoritesListView: View {
-	@EnvironmentObject public var favoriteVM: FavoriteViewModel
+	@StateObject public var favoriteVM = FavoriteViewModel()
 
 	var body: some View {
 		List {

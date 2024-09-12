@@ -28,10 +28,16 @@ class FavoriteViewModel: ObservableObject {
 		}
 	}
 
+	// MARK: Private methods
+
 	/// Add article to favorite
 	/// - Parameter article: Article is from NasaAstronomy model
 	private func addToFavorite(article: Article) {
 		self.favoriteArticles.insert(article, at: 0)
+	}
+
+	private func isArticleIsInFavorites(_ article: Article) -> Bool {
+		return self.favoriteArticles.contains(article)
 	}
 
 	/// Delet Favorite from list swipe
@@ -46,6 +52,8 @@ class FavoriteViewModel: ObservableObject {
 	private func deletSelectedFavorite(article: Article) {
 		self.favoriteArticles.removeAll { $0.date == article.date }
 	}
+
+	// MARK: Public methods
 
 	/// Permit to move index of each article in the array manually.
 	/// - Parameters:
@@ -68,7 +76,7 @@ class FavoriteViewModel: ObservableObject {
 		}
 	}
 
-	func isArticleIsInFavorites(_ article: Article) -> Bool {
-		return self.favoriteArticles.contains(article)
+	func isArticleIsInFavoritesSystemName(_ article: Article) -> String {
+		return isArticleIsInFavorites(article) ? "star.fill" : "star"
 	}
 }

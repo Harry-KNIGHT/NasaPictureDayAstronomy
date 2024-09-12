@@ -72,7 +72,7 @@ final class FavoritesViewModelTests: XCTestCase {
 
 		// THEN
 		XCTAssertEqual(favoriteVM.favoriteArticles.count, 0)
-		XCTAssertFalse(favoriteVM.isArticleIsInFavorites(.imageArticleSample))
+		XCTAssertTrue(favoriteVM.favoriteArticles.isEmpty)
 	}
 
 	func test_given_addArticle_when_deletAttOssets_then_arrayIsEmpty() {
@@ -101,14 +101,26 @@ final class FavoritesViewModelTests: XCTestCase {
 		XCTAssertTrue(favoriteVM.favoriteArticles.count == 2)
 	}
 
-	func test_given_articleIsInFavorite_then_returnTrue() {
+	func test_given_articleIsInFavorite_then_returnFilledStar() {
 
 		// GIVEN
-		favoriteVM.favoriteArticles = [.imageArticleSample, .videoArticleSample]
+		favoriteVM.favoriteArticles = [.imageArticleSample]
+
 
 		// THEN
-		XCTAssertTrue(favoriteVM.isArticleIsInFavorites(.imageArticleSample))
-		XCTAssertTrue(favoriteVM.isArticleIsInFavorites(.videoArticleSample))
-
+		XCTAssertTrue(favoriteVM.isArticleIsInFavoritesSystemName(.imageArticleSample) == "star.fill")
+		XCTAssertFalse(favoriteVM.isArticleIsInFavoritesSystemName(.imageArticleSample) == "star")
+		XCTAssertTrue(favoriteVM.favoriteArticles.contains(.imageArticleSample))
 	}
+
+	func test_given_articleIsInNotInFavorite_then_returnStar() {
+		// GIVEN
+		favoriteVM.favoriteArticles = [.imageArticleSample]
+
+		// THEN
+		XCTAssertTrue(favoriteVM.isArticleIsInFavoritesSystemName(.videoArticleSample) == "star")
+		XCTAssertTrue(favoriteVM.isArticleIsInFavoritesSystemName(.imageArticleSample) == "star.fill")
+		XCTAssertFalse(favoriteVM.favoriteArticles.contains(.videoArticleSample))
+	}
+
 }
